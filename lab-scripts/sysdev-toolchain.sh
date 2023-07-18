@@ -94,7 +94,7 @@ esac
 # Path and misc options
 # Note that crosstool ng is running as root here
 # so we need to inform CT-NG of that.
-sed -i 's/# CT_EXPERIMENTAL is not set/CT_EXPERIMENTAL=y\\nCT_ALLOW_BUILD_AS_ROOT=y\\nCT_ALLOW_BUILD_AS_ROOT_SURE=y/g;
+sed -i 's/# CT_EXPERIMENTAL is not set/CT_EXPERIMENTAL=y\nCT_ALLOW_BUILD_AS_ROOT=y\nCT_ALLOW_BUILD_AS_ROOT_SURE=y/g;
         s/CT_LOG_EXTRA=y/# CT_LOG_EXTRA is not set/g;
         s/# CT_LOG_DEBUG is not set/CT_LOG_DEBUG=y/g;
         s/CT_LOG_LEVEL_MAX="EXTRA"/CT_LOG_LEVEL_MAX="DEBUG"/g' .config;
