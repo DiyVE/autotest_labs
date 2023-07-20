@@ -10,3 +10,4 @@ cd lab-scripts
 # Test sequence
 ./setup.sh
 ./sysdev-toolchain.sh
+./sysdev-u-boot-beagply.sh
