@@ -7,7 +7,7 @@ Help ()
 	echo " Setup lab data help "
 	echo
 	echo "Syntax: $0 [option...]"
-	echo "    -t, --testdir      Indicates where lab datas will be installed"
+	echo "    -d, --lab-dir      Indicates where the lab will be stored"
 	echo "    -u, --url          Indicates the url to download the labs-data"
 	echo "                         This url has to point a tar file"
 	echo 
@@ -21,8 +21,8 @@ while [ $# -gt 0 ]; do
 			LAB_URL="$2"
 			shift
 			shift;;
-		(-t|--testdir)
-			TEST_DIR="$2"
+		(-d|--lab-dir)
+			LAB_DIR="$2"
 			shift
 			shift;;
 		(-h|--help)
@@ -38,16 +38,16 @@ done
 ##
 
 # Tests if the script is running as root
-if [ "${EUID}" -ne 0 ]
+if [ "${EUID}" -eq 0 ]
 then
-    echo "Please run this script as root"
+    echo "You cannot run this script as root !"
     exit 1
 fi
 
-# Tests if LAB_URL and TEST_DIR have been set
-if [ -z $LAB_URL ] || [ -z $TEST_DIR ]
+# Tests if LAB_URL and SESSION_NAME has been set
+if [ -z $LAB_URL ] || [ -z $LAB_DIR ]
 then
-	echo "LAB_URL or/and TEST_DIR variables need to be set\n"
+	echo "LAB_URL and/or LAB_DIR variables need to be set\n"
 	Help
 	exit 1
 fi
@@ -55,21 +55,19 @@ fi
 
 ##Install other requirements
 
-apt update
-apt dist-upgrade
+sudo apt update
+sudo apt dist-upgrade
 
 # Picked from the official Crosstool-NG Dockerfile
-apt install -y gcc g++ gperf bison flex texinfo help2man make libncurses5-dev \
-    python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
-    patch libstdc++6 rsync git meson ninja-build
+sudo apt install -y gcc g++ gperf bison flex texinfo help2man make libncurses5-dev \
+	python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
+	patch libstdc++6 rsync git meson ninja-build
 
-cd $TEST_DIR
 
 BASE_NAME="$(echo $LAB_URL | sed -e 's/^.*.\///g')"
-wget $LAB_URL -O $BASE_NAME
+wget $LAB_URL -O /tmp/$BASE_NAME
+
+mkdir -p $LAB_DIR
 
 # Extract the the tar file name and decompress it
-tar xvf $BASE_NAME
-
-# Export the lab data path into LAB_DIR in case of source
-export LAB_DIR="$(echo $BASE_NAME | sed -e 's/\..*.$//g')"
+tar xvf /tmp/$BASE_NAME -C $LAB_DIR --strip 1

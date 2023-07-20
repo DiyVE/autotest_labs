@@ -7,7 +7,7 @@ Help ()
 	echo "Toolchain lab test help "
 	echo
 	echo "Syntax: $0 [option...]"
-	echo "    -d, --labdir       Indicates the path of the extracted lab-data"
+	echo "    -d, --lab-dir       Indicates the path of the extracted lab-data"
 	echo "                         directory"
 	echo "    -b, --board        Indicates the board used for the test:"
 	echo "                       Possible values: (stm32mp1, beaglebone,"
@@ -23,7 +23,7 @@ while [ $# -gt 0 ]; do
 			LABBOARD="$2"
 			shift
 			shift;;
-		(-d|--labdir)
+		(-d|--lab-dir)
 			LAB_DIR="$2"
 			shift
 			shift;;
@@ -41,20 +41,17 @@ done
 
 # Tests if the script is running as root
 
-if [ "${EUID}" -ne 0 ]
+if [ "${EUID}" -eq 0 ]
 then
-    echo "Please run this script as root"
-    echo
-    echo "/!\ Warning /!\\"
-    echo "In this lab Crosstool-NG will be running as root"
-    echo "which CAN BE DANGEROUS if you are not in a docker"
+    echo "You cannot run this script as root !"
     exit 1
 fi
 
 # Tests if LABBOARD and LAB_DIR have been set
+
 if [ -z $LABBOARD ] || [ -z $LAB_DIR ]
 then
-	echo "LABBOARD or/and LAB_DIR variables need to be set\n"
+	echo "LABBOARD and LAB_DIR variables need to be set\n"
 	Help
 	exit 1
 fi
@@ -63,8 +60,8 @@ fi
 
 cd $LAB_DIR/toolchain
 
-apt install build-essential git autoconf bison flex texinfo help2man gawk \
-libtool-bin libncurses5-dev unzip
+sudo apt install build-essential git autoconf bison flex texinfo help2man gawk \
+	 libtool-bin libncurses5-dev unzip
 
 git clone https://github.com/crosstool-ng/crosstool-ng
 cd crosstool-ng/
@@ -92,9 +89,7 @@ esac
 ## Tweak some Crosstool NG parameters
 
 # Path and misc options
-# Note that crosstool ng is running as root here
-# so we need to inform CT-NG of that.
-sed -i 's/# CT_EXPERIMENTAL is not set/CT_EXPERIMENTAL=y\nCT_ALLOW_BUILD_AS_ROOT=y\nCT_ALLOW_BUILD_AS_ROOT_SURE=y/g;
+sed -i 's/# CT_EXPERIMENTAL is not set/CT_EXPERIMENTAL=y/g;
         s/CT_LOG_EXTRA=y/# CT_LOG_EXTRA is not set/g;
         s/# CT_LOG_DEBUG is not set/CT_LOG_DEBUG=y/g;
         s/CT_LOG_LEVEL_MAX="EXTRA"/CT_LOG_LEVEL_MAX="DEBUG"/g' .config;
@@ -154,3 +149,4 @@ yes "" | ./ct-ng oldconfig
 ./ct-ng build
 
 ## Testing the toolchain
+
