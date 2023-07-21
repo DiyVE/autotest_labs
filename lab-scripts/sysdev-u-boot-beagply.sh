@@ -140,6 +140,8 @@ make PLAT=k3 TARGET_BOARD=lite
 cd $LAB_DIR/bootloader
 mkdir build_uboot/a53/
 
+cd u-boot/
+
 make am62x_evm_a53_defconfig O=../build_uboot/a53/
 
 ## Tweak U-Boot configuration file
@@ -166,9 +168,9 @@ sed -i 's/# CONFIG_FS_EXT4 is not set/CONFIG_FS_EXT4=y\nCONFIG_EXT4_WRITE=y/g' .
 
 yes "" | make oldconfig O=../build_uboot/a53/
 
-make ATF=$HOME/embedded-linux-beagleplay-labs/bootloader/\
-arm-trusted-firmware/build/k3/lite/release/bl31.bin DM=$HOME/\
-embedded-linux-beagleplay-labs/bootloader/ti-linux-firmware/ti-dm/am62xx\
+make ATF=$LAB_DIR/bootloader/\
+arm-trusted-firmware/build/k3/lite/release/bl31.bin DM=$LAB_DIR/\
+bootloader/ti-linux-firmware/ti-dm/am62xx\
 /ipc_echo_testb_mcu1_0_release_strip.xer5f O=../build_uboot/a53
 
 
