@@ -103,7 +103,7 @@ sed -i 's/# CONFIG_FS_EXT4 is not set/CONFIG_FS_EXT4=y\nCONFIG_EXT4_WRITE=y/g' .
 
 yes "" | make oldconfig O=../build_uboot/r5/
 
-sudo apt install libssl-dev device-tree-compiler swig \
+sudo apt install -y libssl-dev device-tree-compiler swig \
 	python3-distutils python3-dev
 
 make DEVICE_TREE=k3-am625-r5-beagleplay O=../build_uboot/r5/

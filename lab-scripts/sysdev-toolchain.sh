@@ -60,7 +60,7 @@ fi
 
 cd $LAB_DIR/toolchain
 
-sudo apt install build-essential git autoconf bison flex texinfo help2man gawk \
+sudo apt install -y build-essential git autoconf bison flex texinfo help2man gawk \
 	 libtool-bin libncurses5-dev unzip
 
 git clone https://github.com/crosstool-ng/crosstool-ng

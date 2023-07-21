@@ -55,13 +55,13 @@ fi
 
 ##Install other requirements
 
-sudo apt update
-sudo apt dist-upgrade
+sudo apt update -y
+sudo apt dist-upgrade -y
 
 # Picked from the official Crosstool-NG Dockerfile
 sudo apt install -y gcc g++ gperf bison flex texinfo help2man make libncurses5-dev \
 	python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
-	patch libstdc++6 rsync git meson ninja-build
+	patch libstdc++6 rsync git meson ninja-build bc
 
 
 BASE_NAME="$(echo $LAB_URL | sed -e 's/^.*.\///g')"
