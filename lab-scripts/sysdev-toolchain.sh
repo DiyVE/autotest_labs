@@ -30,10 +30,11 @@ while [ $# -gt 0 ]; do
 		(-h|--help)
 			Help
 			exit 0;;
-		(-*|--*)
-                        echo "Unknown option $i\n"
-                        Help
-                        exit 1;;
+		(-*)
+			echo "Unknown option $1"
+			echo
+			Help
+			exit 1;;
   esac
 done
 
@@ -51,7 +52,8 @@ fi
 
 if [ -z $LABBOARD ] || [ -z $LAB_DIR ]
 then
-	echo "LABBOARD and LAB_DIR variables need to be set\n"
+	echo "LABBOARD and LAB_DIR variables need to be set"
+	echo
 	Help
 	exit 1
 fi

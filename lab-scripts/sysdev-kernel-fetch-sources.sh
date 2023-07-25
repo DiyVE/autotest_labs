@@ -29,10 +29,11 @@ while [ $# -gt 0 ]; do
 		(-h|--help)
 			Help
 			exit 0;;
-		(-*|--*)
-                        echo "Unknown option $i\n"
-                        Help
-                        exit 1;;
+		(-*)
+			echo "Unknown option $1"
+			echo
+			Help
+			exit 1;;
   esac
 done
 
@@ -50,7 +51,8 @@ fi
 
 if [ -z $LAB_KERNEL_VERSION ] || [ -z $LAB_DIR ]
 then
-	echo "LAB_KERNEL_VERSION and LAB_DIR variables need to be set\n"
+	echo "LAB_KERNEL_VERSION and LAB_DIR variables need to be set"
+	echo
 	Help
 	exit 1
 fi

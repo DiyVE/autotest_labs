@@ -23,11 +23,11 @@ while [ $# -gt 0 ]; do
 		(-h|--help)
 			Help
 			exit 0;;
-		(-*|--*)
-                        echo "Unknown option $i"
+		(-*)
+			echo "Unknown option $1"
 			echo
-                        Help
-                        exit 1;;
+			Help
+			exit 1;;
   esac
 done
 

@@ -12,7 +12,7 @@ Help ()
 		   full-sequence-scripts directory"
 	echo
 	echo "  Exemple: $0 embedded-linux-labs-test.sh"
-	echo "     Will run the embedded-linux-lab-test.sh script"
+	echo "     Will run the embedded-linux-labs-test.sh script"
 }
 
 
