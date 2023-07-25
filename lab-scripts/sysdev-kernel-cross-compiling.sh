@@ -99,30 +99,44 @@ case $LABBOARD in
 esac
 
 ## Tweak the configuration file using scripts/config
-./script/config --set-val CONFIG_GCC_PLUGIN n
-./script/config --set-val CONFIG_INPUT_EVDEV y
+./scripts/config -d CONFIG_GCC_PLUGINS
 
 case $LABBOARD in
 	("beagleplay")
-		./script/config --set-val CONFIG_DRM n
+		sed -i '/# Platform selection/,/# end of Platform selection/s/=.*/ is not set/g;
+				/# Platform selection/,/# end of Platform selection/{/^CONFIG/s/^/# /g}' .config
+		
+		./scripts/config --set-val CONFIG_ARCH_K3 y
+
+		./scripts/config -d CONFIG_DRM;;
 	("qemu")
-		./script/config --set-val CONFIG_DEVTMPFS_MOUNT y
+		./scripts/config --set-val CONFIG_DEVTMPFS_MOUNT y;;
 	("beaglebone")
-		./script/config --set-val CONFIG_DRM n
-		./script/config --set-val CONFIG_USB y
-		./script/config --set-val CONFIG_USB_GADGET y
-		./script/config --set-val CONFIG_USB_MUSB_HDRC y
-		./script/config --set-val CONFIG_USB_MUSB_DSPS y
-		./script/config --set-val CONFIG_USB_MUSB_DUAL_ROLE y
-		./script/config --set-val CONFIG_NOP_USB_XCEIV y
-		./script/config --set-val CONFIG_AM335X_PHY_USB y
-		./script/config --set-val CONFIG_USB_ETH y;;
+		./scripts/config --set-val CONFIG_USB y
+		./scripts/config --set-val CONFIG_USB_GADGET y
+		./scripts/config --set-val CONFIG_USB_MUSB_HDRC y
+		./scripts/config --set-val CONFIG_USB_MUSB_DSPS y
+		./scripts/config --set-val CONFIG_USB_MUSB_DUAL_ROLE y
+		./scripts/config --set-val CONFIG_NOP_USB_XCEIV y
+		./scripts/config --set-val CONFIG_AM335X_PHY_USB y
+		./scripts/config --set-val CONFIG_USB_ETH y
+
+		./scripts/config -d CONFIG_DRM
+		./scripts/config --set-val CONFIG_INPUT_EVDEV y;;
 	("stm32mp1")
-		./script/config --set-val 
-		./script/config --set-val CONFIG_DRM n;;
+		sed -i '/# end of Platform selection/,/# Processor Type/s/=.*/ is not set/g;
+				/# end of Platform selection/,/# Processor Type/{/^CONFIG/s/^/# /g}' .config
+		
+		./scripts/config --set-val CONFIG_ARCH_STM32 y
+		./scripts/config --set-val CONFIG_MACH_STM32MP157 y
+		./scripts/config --set-val CONFIG_MACH_STM32MP13 y
+
+		./scripts/config -d CONFIG_DRM
 	(*)
 		echo "This Board isn't supported yet :("
 		exit 1;;
 esac
 
-sed -i '' 
+yes "" | make oldconfig
+
+make -j"$(nproc)"
