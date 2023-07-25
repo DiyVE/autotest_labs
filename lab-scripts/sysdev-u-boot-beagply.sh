@@ -106,7 +106,7 @@ yes "" | make oldconfig O=../build_uboot/r5/
 sudo apt install -y libssl-dev device-tree-compiler swig \
 	python3-distutils python3-dev
 
-make DEVICE_TREE=k3-am625-r5-beagleplay O=../build_uboot/r5/
+make DEVICE_TREE=k3-am625-r5-beagleplay -j"$(nproc)" O=../build_uboot/r5/
 
 ## Get the TI firmware and create tiboot3.bin image
 
@@ -121,7 +121,7 @@ cd k3-image-gen/
 git checkout 150f1956b4bdcba36e7dffc78a4342df602f8d6e
 
 make SOC=am62x SBL=../build_uboot/r5/spl/u-boot-spl.bin SYSFW_PATH=../\
-ti-linux-firmware/ti-sysfw/ti-fs-firmware-am62x-gp.bin
+ti-linux-firmware/ti-sysfw/ti-fs-firmware-am62x-gp.bin -j"$(nproc)"
 
 ## Get and compile the TF-A
 
@@ -133,7 +133,7 @@ git clone https://github.com/ARM-software/arm-trusted-firmware.git
 cd arm-trusted-firmware/
 git checkout v2.9
 
-make PLAT=k3 TARGET_BOARD=lite
+make PLAT=k3 TARGET_BOARD=lite -j"$(nproc)"
 
 ## Configure U-boot for A53 Processor
 
@@ -171,6 +171,6 @@ yes "" | make oldconfig O=../build_uboot/a53/
 make ATF=$LAB_DIR/bootloader/\
 arm-trusted-firmware/build/k3/lite/release/bl31.bin DM=$LAB_DIR/\
 bootloader/ti-linux-firmware/ti-dm/am62xx\
-/ipc_echo_testb_mcu1_0_release_strip.xer5f O=../build_uboot/a53
+/ipc_echo_testb_mcu1_0_release_strip.xer5f -j"$(nproc)" O=../build_uboot/a53
 
 

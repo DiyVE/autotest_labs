@@ -71,7 +71,7 @@ git checkout 36ad0b1
 
 ./bootstrap
 ./configure --enable-local
-make
+make -j"$(nproc)"
 
 # Choose the correct ready-made config for Crosstool-NG
 case $LABBOARD in
