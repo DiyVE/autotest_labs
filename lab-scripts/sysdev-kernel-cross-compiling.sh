@@ -68,7 +68,7 @@ fi
 
 ##### Kernel Cross-Compiling Lab Test #####
 
-mkdir -p $LAB_DIR/kernel/linux
+cd $LAB_DIR/kernel/linux
 
 git checkout stable/linux-$LAB_KERNEL_VERSION.y
 
