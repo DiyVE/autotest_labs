@@ -131,7 +131,7 @@ case $LABBOARD in
 		./scripts/config --set-val CONFIG_MACH_STM32MP157 y
 		./scripts/config --set-val CONFIG_MACH_STM32MP13 y
 
-		./scripts/config -d CONFIG_DRM
+		./scripts/config -d CONFIG_DRM;;
 	(*)
 		echo "This Board isn't supported yet :("
 		exit 1;;
