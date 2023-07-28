@@ -3,7 +3,7 @@
 set -e
 
 # Training info
-export LABBOARD="bbb"
+export LABBOARD="beaglebone"
 export SESSION_NAME="embedded-linux-bbb"
 export LAB_URL="https://bootlin.com/doc/training/embedded-linux-bbb/embedded-linux-bbb-labs.tar.xz"
 export LAB_KERNEL_VERSION=6.1
