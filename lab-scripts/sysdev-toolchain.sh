@@ -105,7 +105,10 @@ case $LABBOARD in
 		sed -i 's/CT_ARCH_CPU=.*/CT_ARCH_CPU="cortex-a7"/g;
 			s/CT_ARCH_FPU=.*/CT_ARCH_FPU="vfpv4"/g' .config;;
 	("beaglebone")
-		sed -i 's/CT_ARCH_FPU=.*/CT_ARCH_FPU="vfpv3"/g' .config;;
+		sed -i 's/CT_ARCH_FPU=.*/CT_ARCH_FPU="vfpv3"/g;
+				s/# CT_ARCH_FLOAT_HW is not set/CT_ARCH_FLOAT_HW=y/g;
+				s/CT_ARCH_FLOAT_SW=y/# CT_ARCH_FLOAT_SW is not set/g;
+				s/CT_ARCH_FLOAT=.*/CT_ARCH_FLOAT="hard"/g' .config;;
 	("beagleplay")
 		sed -i 's/CT_ARCH_CPU=.*/CT_ARCH_CPU="cortex-a53"/g' .config;;
 esac
@@ -138,7 +141,10 @@ sed -i 's/# CT_LIBC_MUSL is not set/CT_LIBC_MUSL=y/g;
 	s/CT_LIBC_UCLIBC_NG=y/# CT_LIBC_UCLIBC_NG is not set/g' .config
 
 # C Compiler options
-# --nothing for now--
+sed -i '/^CT_GCC_V_/s/=.*/ is not set/g;
+		/^CT_GCC_V_/s/^/# /g' .config
+
+sed -i 's/# CT_GCC_V_12 is not set/CT_GCC_V_12=y/g' .config 
 
 # Debug facilities options
 sed -i '/^CT_DEBUG_/s/=.*/ is not set/g;
