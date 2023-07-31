@@ -66,13 +66,19 @@ cd $LAB_DIR/kernel/linux
 ./scripts/config -e CONFIG_DEBUG_FS
 ./scripts/config -e CONFIG_DEBUG_FS_ALLOW_ALL
 
+yes "" | make -j"$(nproc)"
+
 # Support for leds
 ./scripts/config -e CONFIG_LEDS_CLASS
 ./scripts/config -e CONFIG_LEDS_GPIO
 ./scripts/config -e CONFIG_LEDS_TRIGGER_TIMER
 
+yes "" | make -j"$(nproc)"
+
 # Enable in tree kernel modules
 ./scripts/config -m CONFIG_SND_USB_AUDIO
+
+yes "" | make -j"$(nproc)"
 
 ## Customizing the Device tree and declaring an I2C device
 echo "/dts-v1/;
@@ -115,9 +121,9 @@ make INSTALL_MOD_PATH=$LAB_DIR/tinysystem/nfsroot modules_install
 # Compiling and installing an out-of-tree kernel module
 cd $LAB_DIR/hardware/data/nunchuk/
 
-make -C $HOME/embedded-linux-beagleplay-labs/kernel/linux M=$PWD
+make -C $LAB_DIR/kernel/linux M=$PWD
 
-make -C $HOME/embedded-linux-beagleplay-labs/kernel/linux \
+make -C $LAB_DIR/kernel/linux \
     M=$PWD \
     INSTALL_MOD_PATH=$LAB_DIR/tinysystem/nfsroot \
     modules_install
