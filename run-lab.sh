@@ -88,8 +88,9 @@ then
     exit 1
 fi
 
-# Updating LABDIR with an absolute path
+# Updating LABDIR with an absolute path and with permissions
 export LAB_DIR=$(realpath out/)
+sudo chmod -R a+rwX out/ # Not very clean, to improve 
 
 # Initial value for SKIP_LABS
 if [ -z "$SKIP_LABS" ]
@@ -146,9 +147,9 @@ do
 
     if [ "$current_script" == "none" ]
     then 
-        echo "$TRAINING_NAME-$CURRENT_LAB.sh"
+        ./"$TRAINING_NAME-$CURRENT_LAB.sh"
     else
-        echo "$current_script"
+        ./"$current_script"
     fi
 
     touch "$LAB_DIR/.$CURRENT_LAB-completed"
