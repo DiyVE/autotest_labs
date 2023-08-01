@@ -13,7 +13,7 @@ Help ()
 	echo "    -k, --kernel-version    Indicates the stable kernel version to fetch"
 	echo
 	echo "    -b, --board        Indicates the board used for the test:"
-	echo "                       Possible values: (stm32mp1, beaglebone,"
+	echo "                       Possible values: (stm32, beaglebone,"
 	echo "                         beagleplay, qemu)"
 	echo
 }
@@ -91,7 +91,7 @@ case $LABBOARD in
 		make vexpress_defconfig;;
 	("beaglebone")
 		make omap2plus_defconfig;;
-	("stm32mp1")
+	("stm32")
 		make multi_v7_defconfig;;
 	(*)
 		echo "This Board isn't supported yet :("
@@ -123,7 +123,7 @@ case $LABBOARD in
 
 		./scripts/config -d CONFIG_DRM
 		./scripts/config --set-val CONFIG_INPUT_EVDEV y;;
-	("stm32mp1")
+	("stm32")
 		sed -i '/# end of Platform selection/,/# Processor Type/s/=.*/ is not set/g;
 				/# end of Platform selection/,/# Processor Type/{/^CONFIG/s/^/# /g}' .config
 		

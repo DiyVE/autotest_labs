@@ -10,7 +10,7 @@ Help ()
 	echo "    -d, --lab-dir       Indicates the path of the extracted lab-data"
 	echo "                         directory"
 	echo "    -b, --board        Indicates the board used for the test:"
-	echo "                       Possible values: (stm32mp1, beaglebone,"
+	echo "                       Possible values: (stm32, beaglebone,"
 	echo "                         beagleplay, qemu)"
 	echo
 }
@@ -81,7 +81,7 @@ case $LABBOARD in
 		./ct-ng arm-cortexa9_neon-linux-gnueabihf;;
 	("beaglebone")
 		./ct-ng arm-cortex_a8-linux-gnueabi;;
-	("stm32mp1")
+	("stm32")
 		./ct-ng arm-cortexa5-linux-uclibcgnueabihf;;
 	(*)
 		echo "This Board isn't supported yet :("
@@ -101,7 +101,7 @@ yes "" | ./ct-ng oldconfig
 	
 # Target options
 case $LABBOARD in
-	("stm32mp1")
+	("stm32")
 		sed -i 's/CT_ARCH_CPU=.*/CT_ARCH_CPU="cortex-a7"/g;
 			s/CT_ARCH_FPU=.*/CT_ARCH_FPU="vfpv4"/g' .config;;
 	("beaglebone")

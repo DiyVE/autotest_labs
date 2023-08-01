@@ -10,7 +10,7 @@ Help ()
 	echo "    -d, --lab-dir       Indicates the path of the extracted lab-data"
 	echo "                         directory"
 	echo "    -b, --board        Indicates the board used for the test:"
-	echo "                       Possible values: (stm32mp1, beaglebone,"
+	echo "                       Possible values: (stm32, beaglebone,"
 	echo "                         beagleplay, qemu)"
 	echo
 }
@@ -94,7 +94,7 @@ case $LABBOARD in
         TTY_INT="ttyS2";;
     ("beaglebone")
         TTY_INT="ttyS0";;
-    ("stm32mp1")
+    ("stm32")
         TTY_INT="ttySTM0";;
     ("qemu")
         TTY_INT="ttyAMA0";;

@@ -10,7 +10,7 @@ Help ()
 	echo "    -d, --lab-dir       Indicates the path of the extracted lab-data"
 	echo "                         directory"
 	echo "    -b, --board        Indicates the board used for the test:"
-	echo "                       Possible values: (stm32mp1, beaglebone,"
+	echo "                       Possible values: (stm32, beaglebone,"
 	echo "                         beagleplay, qemu)"
 	echo
 }
@@ -142,7 +142,7 @@ case $LABBOARD in
                 s/# BR2_cortex_a8 is not set/BR2_cortex_a8=y/g;
                 s/BR2_ARM_EABI=y/# BR2_ARM_EABI is not set/g;
                 s/# BR2_ARM_EABIHF is not set/BR2_ARM_EABIHF=y/g' .config;;
-	("stm32mp1")
+	("stm32")
 		sed -i 's/BR2_GCC_TARGET_CPU=.*/BR2_GCC_TARGET_CPU="cortex-a7"/g;
                 s/# BR2_cortex_a7 is not set/BR2_cortex_a7=y/g' .config
         yes "" | make oldconfig
@@ -210,7 +210,7 @@ case $LABBOARD in
 		sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="ti\/k3-am625-beagleplay-custom"/g' .config;;
 	("beaglebone")
 		sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="am335x-boneblack-custom"/g' .config;;
-	("stm32mp1")
+	("stm32")
 		sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="stm32mp157a-dk1-custom"/g' .config;;
 	(*)
 		echo "This Board isn't supported yet :("
