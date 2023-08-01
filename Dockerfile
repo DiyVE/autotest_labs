@@ -9,6 +9,8 @@ ADD . /home/work/
 
 USER work
 
+ENV USER=work
+
 WORKDIR /home/work/
 
 ENTRYPOINT ["./run-lab.sh"]
