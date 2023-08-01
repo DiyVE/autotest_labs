@@ -11,4 +11,4 @@ USER work
 
 WORKDIR /home/work/
 
-ENTRYPOINT ["./top_level_script.sh"]
+ENTRYPOINT ["./run-lab.sh"]
