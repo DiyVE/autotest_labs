@@ -139,7 +139,7 @@ c = 'arm-linux-gcc'
 [host_machine]
 system = 'linux'
 cpu_family = 'arm'
-cpu = 'cortex-a7'
+cpu = 'cortex-a8'
 endian = 'little'
 " > ../cross-file.txt
 

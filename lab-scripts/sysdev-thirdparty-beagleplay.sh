@@ -79,6 +79,7 @@ make -j"$(nproc)"
 
 make DESTDIR=$LAB_DIR/thirdparty/staging/ install
 
+cd ..
 mkdir -p target/usr/lib
 cp -a staging/usr/lib/libasound.so.2* target/usr/lib
 aarch64-linux-strip target/usr/lib/libasound.so.2.0.0
@@ -86,7 +87,7 @@ aarch64-linux-strip target/usr/lib/libasound.so.2.0.0
 mkdir -p target/usr/share
 cp -a staging/usr/share/alsa target/usr/share
 
-sed -i 's/defaults.pcm.ipc_gid audio/defaults.pcm.ipc_gid 0/g'
+sed -i 's/defaults.pcm.ipc_gid audio/defaults.pcm.ipc_gid 0/g' target/usr/share/alsa/alsa.conf
 
 ## Alsa utils section
 wget https://www.alsa-project.org/files/pub/utils/alsa-utils-1.2.9.tar.bz2
@@ -111,7 +112,7 @@ git clone https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
 cd libgpiod
 git checkout v2.0.x
 
-sudo apt install autoconf-archive pkg-config
+sudo apt install -y autoconf-archive pkg-config
 
 ./autogen.sh
 ./configure --host=aarch64-linux --prefix=/usr --enable-tools
@@ -126,7 +127,7 @@ cp -a staging/usr/bin/gpio* target/usr/bin/
 aarch64-linux-strip target/usr/bin/gpio*
 
 ## ipcalc section
-sudo apt install meson
+sudo apt install -y meson
 
 git clone https://gitlab.com/ipcalc/ipcalc.git
 cd ipcalc/

@@ -107,25 +107,6 @@ cd ..
 cp -a staging/usr/bin/speaker-test target/usr/bin/
 arm-linux-strip target/usr/bin/speaker-test
 
-## libgpiod section
-git clone https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
-cd libgpiod
-git checkout v2.0.x
-
-sudo apt install -y autoconf-archive pkg-config
-
-./autogen.sh
-./configure --host=arm-linux --prefix=/usr --enable-tools
-make -j"$(nproc)"
-
-make DESTDIR=$LAB_DIR/thirdparty/staging/ install
-
-cd ..
-cp -a staging/usr/lib/libgpiod.so.3* target/usr/lib/
-arm-linux-strip target/usr/lib/libgpiod*
-cp -a staging/usr/bin/gpio* target/usr/bin/
-arm-linux-strip target/usr/bin/gpio*
-
 ## ipcalc section
 sudo apt install -y meson
 
@@ -139,7 +120,7 @@ c = 'arm-linux-gcc'
 [host_machine]
 system = 'linux'
 cpu_family = 'arm'
-cpu = 'cortex-a7'
+cpu = 'cortex-a9'
 endian = 'little'
 " > ../cross-file.txt
 
