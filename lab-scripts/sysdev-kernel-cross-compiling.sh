@@ -70,6 +70,9 @@ fi
 
 cd $LAB_DIR/kernel/linux
 
+# Clean the lab
+make distclean
+
 git checkout stable/linux-$LAB_KERNEL_VERSION.y
 
 if [ $LABBOARD == "beagleplay" ]

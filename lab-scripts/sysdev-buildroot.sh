@@ -63,6 +63,9 @@ fi
 # Clone and checkout Buildroot
 cd $LAB_DIR/buildroot
 
+# Clean the lab
+sudo rm -rf buildroot
+
 git clone https://git.buildroot.net/buildroot
 cd buildroot
 git checkout 2023.02.x

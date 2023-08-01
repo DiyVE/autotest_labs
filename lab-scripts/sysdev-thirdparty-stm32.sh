@@ -62,6 +62,9 @@ fi
 
 export PATH=$HOME/x-tools/arm-training-linux-musleabihf/bin:$PATH
 
+# Clean the lab
+sudo rm -rf thirdparty
+
 mkdir $LAB_DIR/thirdparty
 cd $LAB_DIR/thirdparty
 

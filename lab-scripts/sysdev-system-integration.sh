@@ -62,6 +62,9 @@ fi
 mkdir -p $LAB_DIR/integration
 cd $LAB_DIR/integration
 
+# Clean the lab
+sudo rm -rf buildroot
+
 git clone $LAB_DIR/buildroot/buildroot
 cd buildroot
 git checkout bootlin-labs

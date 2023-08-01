@@ -62,6 +62,9 @@ fi
 
 cd $LAB_DIR/toolchain
 
+# Clean the lab
+sudo rm -rf crosstool-ng
+
 sudo apt install -y build-essential git autoconf bison flex texinfo help2man gawk \
 	 libtool-bin libncurses5-dev unzip
 

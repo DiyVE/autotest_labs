@@ -57,6 +57,9 @@ export PATH=$HOME/x-tools/arm-training-linux-musleabihf/bin:$PATH
 
 cd $LAB_DIR/bootloader
 
+# Clean the lab
+sudo rm -rf u-boot trusted-firmware-a
+
 git clone https://gitlab.denx.de/u-boot/u-boot
 cd u-boot
 git checkout v2023.04

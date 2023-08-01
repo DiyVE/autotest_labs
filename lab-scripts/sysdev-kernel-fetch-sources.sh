@@ -64,6 +64,9 @@ mkdir -p $LAB_DIR/kernel
 
 cd $LAB_DIR/kernel
 
+# Clean the lab
+sudo rm -rf linux
+
 # Clone the Torvalds Linux repo
 git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
 cd linux
