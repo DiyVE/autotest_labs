@@ -102,8 +102,8 @@ echo "/dts-v1/;
 sed -i '/k3-am625-beagleplay.dtb/a dtb-$(CONFIG_ARCH_K3) += k3-am625-beagleplay-custom.dtb' $LAB_DIR/kernel/linux/arch/arm64/boot/dts/ti/Makefile
 
 # Committing kernel tree changes
-git config  user.email "tux@bootlin.com"
-git config  user.name "Tux Tux"
+git config --global user.email "tux@bootlin.com"
+git config --global user.name "Tux Tux"
 
 git checkout -b bootlin-labs
 git add arch/arm64/boot/dts/ti/k3-am625-beagleplay-custom.dts

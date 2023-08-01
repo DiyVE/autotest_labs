@@ -95,8 +95,8 @@ echo "/dts-v1/;
 sed -i '/stm32mp157a-dk1.dtb/a stm32mp157a-dk1-custom.dtb \\' $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
 
 # Committing kernel tree changes
-git config  user.email "tux@bootlin.com"
-git config  user.name "Tux Tux"
+git config --global user.email "tux@bootlin.com"
+git config --global user.name "Tux Tux"
 
 git checkout -b bootlin-labs
 git add arch/arm/boot/dts/stm32mp157a-dk1-custom.dts
