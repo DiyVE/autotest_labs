@@ -125,6 +125,7 @@ sed -i 's/BR2_PACKAGE_MPD_MAD=y/# BR2_PACKAGE_MPD_MAD is not set/g;
 		s/# BR2_PACKAGE_MPD_VORBIS is not set/BR2_PACKAGE_MPD_VORBIS=y/g;
 		s/BR2_PACKAGE_ZLIB=y/# BR2_PACKAGE_ZLIB is not set/g' .config
 
+yes "" | make oldconfig
 make -j"$(nproc)"
 
 # Analyzing Dep

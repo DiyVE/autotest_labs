@@ -245,6 +245,7 @@ sed -i 's/BR2_PACKAGE_MPD_MAD=y/# BR2_PACKAGE_MPD_MAD is not set/g;
 		s/BR2_PACKAGE_ZLIB=y/# BR2_PACKAGE_ZLIB is not set/g;
 		s/BR2_PACKAGE_NCURSES=y/# BR2_PACKAGE_NCURSES is not set/g' .config
 
+yes "" | make oldconfig
 make -j"$(nproc)"
 
 ## Commit your changes
@@ -253,5 +254,5 @@ git add board/bootlin/ package/nunchuk-driver/
 git commit -as -m "Bootlin lab changes"
 
 # Analyzing Dep
-sudo apt install graphviz
+sudo apt install -y graphviz
 make graph-depends

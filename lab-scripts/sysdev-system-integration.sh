@@ -60,7 +60,7 @@ fi
 
 #####  System Integration Lab Tests  #####
 mkdir -p $LAB_DIR/integration
-cd integration
+cd $LAB_DIR/integration
 
 git clone $LAB_DIR/buildroot/buildroot
 cd buildroot
@@ -181,4 +181,5 @@ sed -i 's/BR2_PACKAGE_MPD_MAD=y/# BR2_PACKAGE_MPD_MAD is not set/g;
 		s/BR2_PACKAGE_ZLIB=y/# BR2_PACKAGE_ZLIB is not set/g;
 		s/BR2_PACKAGE_NCURSES=y/# BR2_PACKAGE_NCURSES is not set/g' .config
 
+yes "" | make oldconfig
 make -j"$(nproc)"
