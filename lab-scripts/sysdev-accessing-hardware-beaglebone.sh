@@ -105,9 +105,6 @@ echo "/dts-v1/;
 sed -i '/am335x-boneblack.dtb/a am335x-boneblack-custom.dtb \\' $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
 
 # Committing kernel tree changes
-git config --global user.email "tux@bootlin.com"
-git config --global user.name "Tux Tux"
-
 git checkout -b bootlin-labs
 git add arch/arm/boot/dts/am335x-boneblack-custom.dts
 git commit -as -m "Custom DTS for Bootlin lab"
