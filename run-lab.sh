@@ -17,6 +17,7 @@ Help ()
     echo "    -u, --url              Indicates where to get lab-data. Can be either an url or"
     echo "                              a path to a tar.gz file. This option is optional only"
     echo "                              if the output directory is not empty"
+    echo "    -c, --clean            Remove every file in the output directory"
     echo "    -h, --help             Shows this help"
     echo
 	echo "  Exemple: $0 -t sysdev -l buildroot -b beagleplay -o output/"
@@ -50,6 +51,9 @@ while [ $# -gt 0 ]; do
             export LAB_URL="$2"
             shift
             shift;;
+        (-c|--clean)
+            CLEAN_REQUESTED=true
+            shift;;
 		(-h|--help)
 			Help
 			exit 0;;
@@ -60,6 +64,14 @@ while [ $# -gt 0 ]; do
 			exit 1;;
   esac
 done
+
+# If clean has been requested
+if [ "$CLEAN_REQUESTED" ]
+then
+    echo "[WARN] Cleaning the Output directory"
+    sudo rm -rf "$LAB_DIR/*"
+    exit 0
+fi
 
 ## Testing requirements
 
