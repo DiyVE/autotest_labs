@@ -79,7 +79,7 @@ then
 	exit 1
 fi
 
-# Test if the OUTPUT directory is empty 
+# Test if the OUTPUT directory is empty and lab url not defined
 if [ "$(ls -A $LAB_DIR)" ] && [ -z "$LAB_URL" ]
 then
     echo "$LAB_DIR is empty and you didn't specified any tar file"

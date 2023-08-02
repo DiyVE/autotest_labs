@@ -65,7 +65,8 @@ sudo apt install -y gcc g++ gperf bison flex texinfo help2man make libncurses5-d
 	python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
 	patch libstdc++6 rsync git meson ninja-build bc cpio kmod
 
-if [ ! -z "$LAB_URL" ]
+# If the output dir is empty and we have an url
+if [ ! -z "$LAB_URL" ] && [ "$(ls -A $LAB_DIR)" ]
 then
 	BASE_NAME="$(echo $LAB_URL | sed -e 's/^.*.\///g')"
 	wget $LAB_URL -O /tmp/$BASE_NAME
