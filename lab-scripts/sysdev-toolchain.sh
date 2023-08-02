@@ -99,6 +99,8 @@ sed -i 's/# CT_EXPERIMENTAL is not set/CT_EXPERIMENTAL=y/g;
         s/# CT_LOG_DEBUG is not set/CT_LOG_DEBUG=y/g;
         s/CT_LOG_LEVEL_MAX="EXTRA"/CT_LOG_LEVEL_MAX="DEBUG"/g' .config;
 
+sed -i '/^CT_PREFIX_DIR/s/\${HOME}/$LAB_DIR/g' .config # Used to keep the toolchain inside the output directory
+
 # Refresh config params
 yes "" | ./ct-ng oldconfig
 	

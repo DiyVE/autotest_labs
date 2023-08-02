@@ -77,11 +77,11 @@ git checkout stable/linux-$LAB_KERNEL_VERSION.y
 
 if [ $LABBOARD == "beagleplay" ]
 then
-	export PATH=$HOME/x-tools/aarch64-training-linux-musl/bin:$PATH
+	export PATH=$LAB_DIR/x-tools/aarch64-training-linux-musl/bin:$PATH
 	export ARCH=arm64 # The Linux kernel doesn't uses aarch64 to describe ARM 64 bits arch 
 	export CROSS_COMPILE=aarch64-linux-
 else
-	export PATH=$HOME/x-tools/arm-training-linux-musleabihf/bin:$PATH
+	export PATH=$LAB_DIR/x-tools/arm-training-linux-musleabihf/bin:$PATH
 	export ARCH=arm
 	export CROSS_COMPILE=arm-linux-
 fi

@@ -53,7 +53,7 @@ fi
 
 ##### BeagleBoneBlack U-Boot Lab Tests #####
 
-export PATH=$HOME/x-tools/arm-training-linux-musleabihf/bin:$PATH
+export PATH=$LAB_DIR/x-tools/arm-training-linux-musleabihf/bin:$PATH
 
 cd $LAB_DIR/bootloader
 

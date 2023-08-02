@@ -53,7 +53,7 @@ fi
 
 ##### Beagleplay U-Boot Lab Tests #####
 
-export PATH=$HOME/x-tools/aarch64-training-linux-musl/bin:$PATH
+export PATH=$LAB_DIR/x-tools/aarch64-training-linux-musl/bin:$PATH
 
 cd $LAB_DIR/bootloader
 
@@ -67,10 +67,10 @@ wget -O /tmp/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz https://\
 developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/\
 arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz
 
-tar vxJf /tmp/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz -C $HOME/\
+tar vxJf /tmp/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz -C $LAB_DIR/\
 x-tools
 
-export PATH=$HOME/x-tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi/bin/:$PATH
+export PATH=$LAB_DIR/x-tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi/bin/:$PATH
 
 git clone https://git.beagleboard.org/beagleplay/u-boot.git
 cd u-boot/

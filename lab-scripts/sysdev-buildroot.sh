@@ -177,9 +177,9 @@ sed -i 's/BR2_TOOLCHAIN_EXTERNAL_CUSTOM_UCLIBC=y/# BR2_TOOLCHAIN_EXTERNAL_CUSTOM
 
 if [ $LABBOARD == "beagleplay" ]
 then
-	sed -i "s/BR2_TOOLCHAIN_EXTERNAL_PATH=.*/BR2_TOOLCHAIN_EXTERNAL_PATH=\"\/home\/$USER\/x-tools\/aarch64-training-linux-musl\"/" .config
+	sed -i "s#BR2_TOOLCHAIN_EXTERNAL_PATH=.*#BR2_TOOLCHAIN_EXTERNAL_PATH=\"$LAB_DIR\/x-tools\/aarch64-training-linux-musl\"#g" .config
 else
-	sed -i "s/BR2_TOOLCHAIN_EXTERNAL_PATH=.*/BR2_TOOLCHAIN_EXTERNAL_PATH=\"\/home\/$USER\/x-tools\/arm-training-linux-musleabihf\"/" .config
+	sed -i "s#BR2_TOOLCHAIN_EXTERNAL_PATH=.*#BR2_TOOLCHAIN_EXTERNAL_PATH=\"$LAB_DIR\/x-tools\/arm-training-linux-musleabihf\"#g" .config
 fi
 
 yes "" | make oldconfig

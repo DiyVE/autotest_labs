@@ -53,7 +53,7 @@ fi
 
 #####Accessing Hardware Stm32 Lab Tests #####
 
-export PATH=$HOME/x-tools/arm-training-linux-musleabihf/bin:$PATH
+export PATH=$LAB_DIR/x-tools/arm-training-linux-musleabihf/bin:$PATH
 export ARCH=arm
 export CROSS_COMPILE=arm-linux-
 

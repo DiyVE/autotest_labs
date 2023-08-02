@@ -60,7 +60,7 @@ fi
 
 #####  Thirdparty Lab Tests  #####
 
-export PATH=$HOME/x-tools/aarch64-training-linux-musl/bin:$PATH
+export PATH=$LAB_DIR/x-tools/aarch64-training-linux-musl/bin:$PATH
 
 # Clean the lab
 sudo rm -rf thirdparty

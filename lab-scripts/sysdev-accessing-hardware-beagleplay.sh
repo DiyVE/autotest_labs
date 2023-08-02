@@ -54,7 +54,7 @@ fi
 #####Accessing Hardware BeaglePlay Lab Tests #####
 
 
-export PATH=$HOME/x-tools/aarch64-training-linux-musl/bin:$PATH
+export PATH=$LAB_DIR/x-tools/aarch64-training-linux-musl/bin:$PATH
 export ARCH=arm64 # The Linux kernel doesn't uses aarch64 to describe ARM 64 bits arch 
 export CROSS_COMPILE=aarch64-linux-
 

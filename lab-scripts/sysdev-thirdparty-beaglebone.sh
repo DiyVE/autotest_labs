@@ -60,7 +60,7 @@ fi
 
 #####  Thirdparty Lab Tests  #####
 
-export PATH=$HOME/x-tools/arm-training-linux-musleabihf/bin:$PATH
+export PATH=$LAB_DIR/x-tools/arm-training-linux-musleabihf/bin:$PATH
 
 # Clean the lab
 sudo rm -rf thirdparty

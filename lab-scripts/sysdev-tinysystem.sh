@@ -64,9 +64,9 @@ fi
 # Export the corresponding toolchain binaries
 if [ $LABBOARD == "beagleplay" ]
 then
-	export PATH=$HOME/x-tools/aarch64-training-linux-musl/bin:$PATH
+	export PATH=$LAB_DIR/x-tools/aarch64-training-linux-musl/bin:$PATH
 else
-	export PATH=$HOME/x-tools/arm-training-linux-musleabihf/bin:$PATH
+	export PATH=$LAB_DIR/x-tools/arm-training-linux-musleabihf/bin:$PATH
 fi
 
 cd $LAB_DIR/tinysystem
@@ -126,10 +126,10 @@ chmod +x nfsroot/etc/init.d/rcS
 if [ $LABBOARD == "beagleplay" ]
 then
 	aarch64-linux-gcc data/hello.c -o data/hello
-    cp $HOME/x-tools/aarch64-training-linux-musl/aarch64-training-linux-musl/sysroot/lib/ld-musl-aarch64.so.1 nfsroot/lib
+    cp $LAB_DIR/x-tools/aarch64-training-linux-musl/aarch64-training-linux-musl/sysroot/lib/ld-musl-aarch64.so.1 nfsroot/lib
 else
 	arm-linux-gcc data/hello.c -o data/hello
-    cp $HOME/x-tools/arm-training-linux-musleabihf/arm-training-linux-musleabihf/sysroot/lib/ld-musl-armhf.so.1 nfsroot/lib
+    cp $LAB_DIR/x-tools/arm-training-linux-musleabihf/arm-training-linux-musleabihf/sysroot/lib/ld-musl-armhf.so.1 nfsroot/lib
 fi
 
 cp data/hello nfsroot/

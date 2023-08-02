@@ -99,7 +99,7 @@ sed -i 's/BR2_TOOLCHAIN_EXTERNAL_CUSTOM_UCLIBC=y/# BR2_TOOLCHAIN_EXTERNAL_CUSTOM
 		s/# BR2_TOOLCHAIN_EXTERNAL_HEADERS_6_1 is not set/BR2_TOOLCHAIN_EXTERNAL_HEADERS_6_1=y/g;
 		s/BR2_TOOLCHAIN_EXTERNAL_HEADERS_REALLY_OLD=y/# BR2_TOOLCHAIN_EXTERNAL_HEADERS_REALLY_OLD is not set/g' .config
 
-sed -i "s/BR2_TOOLCHAIN_EXTERNAL_PATH=.*/BR2_TOOLCHAIN_EXTERNAL_PATH=\"\/home\/$USER\/x-tools\/arm-training-linux-musleabihf\"/" .config
+sed -i 's/BR2_TOOLCHAIN_EXTERNAL_PATH=.*/BR2_TOOLCHAIN_EXTERNAL_PATH="$LAB_DIR\/x-tools\/arm-training-linux-musleabihf"/g' .config
 
 
 yes "" | make oldconfig
