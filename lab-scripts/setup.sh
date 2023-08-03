@@ -36,7 +36,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-##
+## Testing requirements
 
 # Tests if the script is running as root
 if [ "${EUID}" -eq 0 ]
@@ -62,7 +62,14 @@ git config --global user.name "Tux Tux"
 if [ ! -z "$LAB_URL" ] && [ ! "$(ls -A $LAB_DIR)" ]
 then
 	BASE_NAME="$(echo $LAB_URL | sed -e 's/^.*.\///g')"
-	wget $LAB_URL -O /tmp/$BASE_NAME
+	if ! wget $LAB_URL -O /tmp/$BASE_NAME
+	then
+		echo
+		echo "The LAB_URL not seems to correspond to an URL"
+		echo "Trying to use the URL as a file path..."
+		echo
+		cp $LAB_URL /tmp/$BASE_NAME
+	fi
 
 	# Extract the the tar file name and decompress it
 	tar xvf /tmp/$BASE_NAME -C $LAB_DIR --strip 1
