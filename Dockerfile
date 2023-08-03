@@ -19,4 +19,4 @@ ENV USER=work
 
 WORKDIR /home/work/
 
-ENTRYPOINT ["./run-lab.sh"]
+ENTRYPOINT ["./entrypoint.sh"]

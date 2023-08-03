@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 Help ()
 {
 	echo "run-lab command help "
@@ -24,66 +22,44 @@ Help ()
 	echo "     Will run all the sysdev lab scripts until it finished the buildroot lab"
 }
 
+
+SAVED_ARGS=($@)
+
 ## Get inline parameters
 while [ $# -gt 0 ]; do
 	case $1 in
-		(-t|--training)
-			export TRAINING_NAME="$2"
-			shift
-			shift;;
-        (-b|--board)
-            export LABBOARD="$2"
-            shift
-            shift;;
-        (-l|--lab)
-            export STOP_LAB="$2"
-            shift
-            shift;;
-        (-s|--skip-labs)
-            export SKIP_LABS="$2"
-            shift
-            shift;;
         (-o|--output)
             export LAB_DIR="$2"
             shift
             shift;;
-        (-u|--url)
-            export LAB_URL="$2"
+        (-*)
             shift
             shift;;
-        (-c|--clean)
-            CLEAN_REQUESTED=true
-            shift;;
-		(-h|--help)
-			Help
-			exit 0;;
-		(-*)
-			echo "Unknown option $1"
-			echo
-			Help
-			exit 1;;
   esac
 done
 
-# If clean has been requested
-if [ "$CLEAN_REQUESTED" ]
+if command -v docker > /dev/null
 then
-    echo "[WARN] Cleaning the Output directory"
-    sudo rm -rf "$LAB_DIR/*"
-    exit 0
-fi
-
-## Testing requirements
-
-# Test if the script is running as root
-if [ "${EUID}" -eq 0 ]
-then
-    echo "You cannot run this script as root !"
+    docker ps > /dev/null 2>&1
+    if [ $? -eq 1 ]
+    then
+        echo "You don't have permission to connect to the docker daemon !"
+        echo
+        echo "To address this issue please create a docker group:"
+        echo
+        echo "      sudo groupadd docker"
+        echo
+        echo "And add your USER to it :"
+        echo
+        echo '      sudo usermod -aG docker ${USER}'
+        exit 1
+    fi
+else
+    echo "Docker is not installed on your machine"
     exit 1
 fi
 
-# Test if LABBOARD, TRAINING_NAME and LAB_DIR have been set
-if [ -z "$TRAINING_NAME" ] || [ -z "$LABBOARD" ] || [ -z "$LAB_DIR" ]
+if [ -z "$LAB_DIR" ]
 then
 	echo "Missing required arguments !"
 	echo
@@ -91,85 +67,6 @@ then
 	exit 1
 fi
 
-# Test if the OUTPUT directory is empty and lab url not defined
-if [ "$(ls -A $LAB_DIR)" ] && [ -z "$LAB_URL" ]
-then
-    echo "$LAB_DIR is empty and you didn't specified any tar file"
-    echo
-    Help
-    exit 1
-fi
+LAB_DIR=$(realpath out/)
 
-# Updating LABDIR with an absolute path and with permissions
-export LAB_DIR=$(realpath out/)
-sudo chmod -R a+rwX out/ # Not very clean, to improve 
-
-# Initial value for SKIP_LABS
-if [ -z "$SKIP_LABS" ]
-then
-    export SKIP_LABS=()
-fi
-
-# Source the corresponding training
-source $PWD/trainings/$TRAINING_NAME.env
-
-cd lab-scripts
-
-AVAILABLE_SCRIPTS=(*)
-
-# Iterate through lab test sequence
-for CURRENT_LAB in "${TRAINING_SEQ[@]}"
-do
-    # Check if the CURRENT_LAB need to be skipped
-    if [[ ${SKIP_LABS[*]} =~ $CURRENT_LAB ]] || [ -f "$LAB_DIR/.$CURRENT_LAB-completed" ]
-    then 
-        echo "[WARN] Skipping the $CURRENT_LAB lab"
-
-        # If we don't do this, we will skip the previously completed lab and
-        # not respect the STOP_LAB param
-        if [ "$CURRENT_LAB" != "$STOP_LAB" ]
-        then
-            continue
-        else
-            break
-        fi
-    fi
-    
-    # Get the scripts available for the CURRENT_LAB
-    selected_scripts=()
-    for script in "${AVAILABLE_SCRIPTS[@]}"
-    do
-        if [[ "$script" == *"$CURRENT_LAB"* ]]
-        then
-            selected_scripts+=("$script")
-        fi
-    done
-
-    # If a script name have a suffix that corresponds to the board
-    # Then we execute it
-    current_script="none"
-    for script in "${selected_scripts[@]}"
-    do
-        if [[ "$script" == *-$LABBOARD.sh ]]
-        then
-            current_script="$script"
-            break
-        fi
-    done
-
-    if [ "$current_script" == "none" ]
-    then 
-        ./"$TRAINING_NAME-$CURRENT_LAB.sh"
-    else
-        ./"$current_script"
-    fi
-
-    touch "$LAB_DIR/.$CURRENT_LAB-completed"
-
-    # Check if this CURRENT_LAB is the last requested
-    if [ "$CURRENT_LAB" == "$STOP_LAB" ] 
-    then 
-        echo "[WARN] Stopping as requested at $CURRENT_LAB lab"
-        break
-    fi
-done
+docker run -it -u "$SUDO_UID" --mount type=bind,source="$LAB_DIR",target=/home/work/out autotest_labs "${SAVED_ARGS[@]}" --output /home/work/out
