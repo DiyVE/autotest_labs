@@ -59,7 +59,7 @@ git config --global user.email "tux@bootlin.com"
 git config --global user.name "Tux Tux"
 
 # If the output dir is empty and we have an url
-if [ ! -z "$LAB_URL" ] && [ "$(ls -A $LAB_DIR)" ]
+if [ ! -z "$LAB_URL" ] && [ ! "$(ls -A $LAB_DIR)" ]
 then
 	BASE_NAME="$(echo $LAB_URL | sed -e 's/^.*.\///g')"
 	wget $LAB_URL -O /tmp/$BASE_NAME

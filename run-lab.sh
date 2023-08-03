@@ -29,7 +29,11 @@ SAVED_ARGS=($@)
 while [ $# -gt 0 ]; do
 	case $1 in
         (-o|--output)
-            export LAB_DIR="$2"
+            LAB_DIR="$2"
+            shift
+            shift;;
+        (-r|--re-build)
+            RE_BUILD=true
             shift
             shift;;
         (-*)
@@ -65,6 +69,12 @@ then
 	echo
 	Help
 	exit 1
+fi
+
+# Build the docker image if requested or if not already built
+if [ "$RE_BUILD" ] || [[ "$(docker images -q autotest_labs:latest 2> /dev/null)" == "" ]]
+then
+    docker build -t autotest_labs .
 fi
 
 LAB_DIR=$(realpath out/)

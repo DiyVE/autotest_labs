@@ -54,6 +54,8 @@ while [ $# -gt 0 ]; do
         (-c|--clean)
             CLEAN_REQUESTED=true
             shift;;
+        (-r|--re-build)
+            shift;;
 		(-h|--help)
 			Help
 			exit 0;;
@@ -64,14 +66,6 @@ while [ $# -gt 0 ]; do
 			exit 1;;
   esac
 done
-
-# If clean has been requested
-if [ "$CLEAN_REQUESTED" ]
-then
-    echo "[WARN] Cleaning the Output directory"
-    rm -rf "$LAB_DIR/*"
-    exit 0
-fi
 
 ## Testing requirements
 
@@ -102,6 +96,15 @@ fi
 
 # Updating LABDIR with an absolute path and with permissions
 export LAB_DIR=$(realpath out/)
+
+# If clean has been requested
+if [ "$CLEAN_REQUESTED" ]
+then
+    echo "[WARN] Cleaning the Output directory"
+    rm -rf $LAB_DIR/.* 2>/dev/null
+    rm -rf $LAB_DIR/*
+    exit 0
+fi
 
 # Initial value for SKIP_LABS
 if [ -z "$SKIP_LABS" ]
