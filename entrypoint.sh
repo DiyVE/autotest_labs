@@ -18,6 +18,7 @@ Help ()
     echo "                              a path to a tar.gz file. This option is optional only"
     echo "                              if the output directory is not empty"
     echo "    -c, --clean            Remove every file in the output directory"
+    echo "    -r, --re-build         Rebuild the Dockerimage"
     echo "    -h, --help             Shows this help"
     echo
 	echo "  Exemple: $0 -t sysdev -l buildroot -b beagleplay -o output/"
@@ -118,20 +119,20 @@ source $PWD/trainings/$TRAINING_NAME.env
 cd lab-scripts
 
 # Execute the mandatorty setup script
-./"$TRAINING_NAME-setup.sh"
+./setup.sh
 
 AVAILABLE_SCRIPTS=(*)
 
 # Iterate through lab test sequence
 for CURRENT_LAB in "${TRAINING_SEQ[@]}"
 do
-    # Check if the CURRENT_LAB need to be skipped
+    # Check if the CURRENT_LAB needs to be skipped
     if [[ ${SKIP_LABS[*]} =~ $CURRENT_LAB ]] || [ -f "$LAB_DIR/.$CURRENT_LAB-completed" ]
     then 
         echo "[WARN] Skipping the $CURRENT_LAB lab"
 
         # If we don't do this, we will skip the previously completed lab and
-        # not respect the STOP_LAB param
+        # do not respect the STOP_LAB param
         if [ "$CURRENT_LAB" != "$STOP_LAB" ]
         then
             continue
@@ -140,7 +141,7 @@ do
         fi
     fi
     
-    # Get the scripts available for the CURRENT_LAB
+    # Get the available scripts for the CURRENT_LAB
     selected_scripts=()
     for script in "${AVAILABLE_SCRIPTS[@]}"
     do
@@ -163,12 +164,15 @@ do
     done
 
     if [ "$current_script" == "none" ]
-    then 
+    then
+        echo "[INFO] Testing $TRAINING_NAME-$CURRENT_LAB lab..."
         ./"$TRAINING_NAME-$CURRENT_LAB.sh"
     else
+        echo "[INFO] Testing $current_script lab..."
         ./"$current_script"
     fi
 
+    # Mark the lab completed
     touch "$LAB_DIR/.$CURRENT_LAB-completed"
 
     # Check if this CURRENT_LAB is the last requested

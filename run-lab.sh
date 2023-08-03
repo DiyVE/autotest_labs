@@ -16,12 +16,12 @@ Help ()
     echo "                              a path to a tar.gz file. This option is optional only"
     echo "                              if the output directory is not empty"
     echo "    -c, --clean            Remove every file in the output directory"
+    echo "    -r, --re-build         Rebuild the Dockerimage"
     echo "    -h, --help             Shows this help"
     echo
 	echo "  Exemple: $0 -t sysdev -l buildroot -b beagleplay -o output/"
 	echo "     Will run all the sysdev lab scripts until it finished the buildroot lab"
 }
-
 
 SAVED_ARGS=($@)
 
@@ -36,12 +36,18 @@ while [ $# -gt 0 ]; do
             RE_BUILD=true
             shift
             shift;;
+        (-u|--url)
+            export LAB_URL="$2"
+            shift
+            shift;;
         (-*)
             shift
             shift;;
   esac
 done
 
+
+# Checking requirements
 if command -v docker > /dev/null
 then
     docker ps > /dev/null 2>&1
