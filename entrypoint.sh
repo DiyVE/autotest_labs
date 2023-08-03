@@ -95,8 +95,8 @@ then
     exit 1
 fi
 
-# Updating LABDIR with an absolute path and with permissions
-export LAB_DIR=$(realpath out/)
+# Updating LABDIR with an absolute path
+export LAB_DIR=$(realpath "$LAB_DIR")
 
 # If clean has been requested
 if [ "$CLEAN_REQUESTED" ]
@@ -104,7 +104,6 @@ then
     echo "[WARN] Cleaning the Output directory"
     rm -rf $LAB_DIR/.* 2>/dev/null || true
     rm -rf $LAB_DIR/*
-    exit 0
 fi
 
 # Initial value for SKIP_LABS
