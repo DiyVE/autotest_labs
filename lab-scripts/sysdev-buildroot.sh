@@ -81,6 +81,7 @@ mkdir -p board/bootlin/training/rootfs-overlay/etc/init.d/
 
 echo '#!/bin/sh
 modprobe snd-usb-audio' > board/bootlin/training/rootfs-overlay/etc/init.d/S03modprobe
+chmod +x board/bootlin/training/rootfs-overlay/etc/init.d/S03modprobe
 
 mkdir -p board/bootlin/training/rootfs-overlay/var/lib/mpd/music
 cp ../data/music/* board/bootlin/training/rootfs-overlay/var/lib/mpd/music
@@ -101,6 +102,7 @@ echo "NUNCHUK_DRIVER_VERSION = 1.0
 NUNCHUK_DRIVER_SITE = $LAB_DIR/hardware/data/nunchuk
 NUNCHUK_DRIVER_SITE_METHOD = local
 NUNCHUK_DRIVER_LICENSE = GPL-2.0
+
 \$(eval \$(kernel-module))
 \$(eval \$(generic-package))" > package/nunchuk-driver/nunchuk-driver.mk
 
@@ -228,7 +230,8 @@ yes "" | make oldconfig
 sed -i 's/# BR2_PACKAGE_ALSA_UTILS is not set/BR2_PACKAGE_ALSA_UTILS=y/g;
 		s/# BR2_PACKAGE_MPD is not set/BR2_PACKAGE_MPD=y/g;
 		s/# BR2_PACKAGE_MPD_MPC is not set/BR2_PACKAGE_MPD_MPC=y/g;
-		s/# BR2_PACKAGE_EVTEST is not set/BR2_PACKAGE_EVTEST=y/g' .config
+		s/# BR2_PACKAGE_EVTEST is not set/BR2_PACKAGE_EVTEST=y/g;
+		s/# BR2_PACKAGE_NUNCHUK_DRIVER is not set/BR2_PACKAGE_NUNCHUK_DRIVER=y/g' .config
 
 yes "" | make oldconfig
 
