@@ -72,7 +72,7 @@ fi
 cd $LAB_DIR/tinysystem
 
 # Clean the lab
-sudo rm -rf nfsroot busybox
+rm -rf nfsroot busybox
 
 mkdir -p nfsroot/proc nfsroot/etc/init.d \
 		 nfsroot/sys nfsroot/lib nfsroot/dev

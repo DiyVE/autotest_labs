@@ -58,7 +58,7 @@ export PATH=$LAB_DIR/x-tools/aarch64-training-linux-musl/bin:$PATH
 cd $LAB_DIR/bootloader
 
 # Clean the lab
-sudo rm -rf u-boot ti-linux-firmware \
+rm -rf u-boot ti-linux-firmware \
 	   arm-trusted-firmware build_uboot k3-image-gen
 
 ##Get and install the 32 bits toolchain

@@ -57,7 +57,7 @@ fi
 cd $LAB_DIR/buildroot
 
 # Clean the lab
-sudo rm -rf buildroot
+rm -rf buildroot
 
 git clone https://git.buildroot.net/buildroot
 cd buildroot
