@@ -54,17 +54,6 @@ then
 	exit 1
 fi
 
-##Install other requirements
-
-sudo apt update -y
-sudo apt dist-upgrade -y
-
-# Picked from the official Crosstool-NG Dockerfile
-sudo apt install -y gcc g++ gperf bison flex texinfo help2man make libncurses5-dev \
-	python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
-	patch libstdc++6 rsync git meson ninja-build bc cpio kmod libssl-dev \
-	device-tree-compiler swig python3-distutils
-
 # Define a global user email and name for git config
 git config --global user.email "tux@bootlin.com"
 git config --global user.name "Tux Tux"
