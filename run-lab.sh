@@ -79,4 +79,4 @@ fi
 
 LAB_DIR=$(realpath out/)
 
-docker run -it -u "$SUDO_UID" --mount type=bind,source="$LAB_DIR",target=/home/work/out autotest_labs "${SAVED_ARGS[@]}" --output /home/work/out
+docker run -it -u "$UID" --mount type=bind,source="$LAB_DIR",target=/home/work/out autotest_labs "${SAVED_ARGS[@]}" --output /home/work/out

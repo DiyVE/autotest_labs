@@ -101,7 +101,7 @@ export LAB_DIR=$(realpath out/)
 if [ "$CLEAN_REQUESTED" ]
 then
     echo "[WARN] Cleaning the Output directory"
-    rm -rf $LAB_DIR/.* 2>/dev/null
+    rm -rf $LAB_DIR/.* 2>/dev/null || true
     rm -rf $LAB_DIR/*
     exit 0
 fi
