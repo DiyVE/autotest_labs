@@ -74,9 +74,22 @@ fi
 # Build the docker image if requested or if not already built
 if [ "$RE_BUILD" ] || [[ "$(docker images -q autotest_labs:latest 2> /dev/null)" == "" ]]
 then
-    docker build -t autotest_labs .
+    docker build --build-arg UID="$UID" -t autotest_labs .
 fi
 
-LAB_DIR=$(realpath out/)
 
-docker run -it -u "$UID" --mount type=bind,source="$LAB_DIR",target=/home/work/out autotest_labs "${SAVED_ARGS[@]}" --output /home/work/out
+# Updating LABDIR with an absolute path
+LAB_DIR=$(realpath $LAB_DIR)
+
+# In case $LAB_URL is in fact a file path
+if [ -f "$LAB_URL" ]
+then
+    BASE_NAME="$(echo $LAB_URL | sed -e 's/^.*.\///g')"
+    SAVED_ARGS+=("-u" "/home/work/$BASE_NAME")
+
+    # Launching the Docker container with correct UID and mounted output directory AND $LAB_URL file
+    docker run -it -v "$LAB_URL:/home/work/$BASE_NAME" -u "$UID" --mount type=bind,source="$LAB_DIR",target=/home/work/out autotest_labs "${SAVED_ARGS[@]}" --output /home/work/out
+else
+    # Launching the Docker container with correct UID and mounted output directory
+    docker run -it -u "$UID" --mount type=bind,source="$LAB_DIR",target=/home/work/out autotest_labs "${SAVED_ARGS[@]}" --output /home/work/out
+fi
