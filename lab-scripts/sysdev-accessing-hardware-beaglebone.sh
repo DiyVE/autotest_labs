@@ -9,6 +9,7 @@ Help ()
 	echo "Syntax: $0 [option...]"
 	echo "    -d, --lab-dir       Indicates the path of the extracted lab-data"
 	echo "                         directory"
+	echo "    -w, --wireless      Indicates that the selected board is the wireless one"
 	echo
 }
 
@@ -19,6 +20,9 @@ while [ $# -gt 0 ]; do
 		(-d|--lab-dir)
 			LAB_DIR="$2"
 			shift
+			shift;;
+		(-w|--wireless)
+			BBB_WIRELESS=true
 			shift;;
 		(-h|--help)
 			Help
@@ -43,9 +47,9 @@ fi
 
 # Tests if LABBOARD and LAB_DIR have been set
 
-if [ -z $LAB_DIR ]
+if [ -z $LAB_DIR ] || [ -z $BBB_WIRELESS ]
 then
-	echo "LAB_DIR variable needs to be set"
+	echo "LAB_DIR and BBB_WIRELESS variables need to be set"
 	echo
 	Help
 	exit 1
@@ -81,8 +85,16 @@ yes "" | make -j"$(nproc)"
 yes "" | make -j"$(nproc)"
 
 ## Customizing the Device tree and declaring an I2C device
+
+if $BBB_WIRELESS
+then
+	DT_NAME="am335x-boneblack-wireless"
+else
+	DT_NAME="am335x-boneblack"
+fi
+
 echo "/dts-v1/;
-#include \"am335x-boneblack.dts\"
+#include \"$DT_NAME.dts\"
 
 &am33xx_pinmux {
 	i2c1_pins: pinmux_i2c1_pins {
@@ -100,13 +112,13 @@ echo "/dts-v1/;
         compatible = \"nintendo,nunchuk\";
         reg = <0x52>;
     };
-};" > $LAB_DIR/kernel/linux/arch/arm/boot/dts/am335x-boneblack-custom.dts
+};" > $LAB_DIR/kernel/linux/arch/arm/boot/dts/$DT_NAME-custom.dts
 
-sed -i '/am335x-boneblack.dtb/a am335x-boneblack-custom.dtb \\' $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
+sed -i "/$DT_NAME.dtb/a $DT_NAME-custom.dtb \\" $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
 
 # Committing kernel tree changes
 git checkout -b bootlin-labs
-git add arch/arm/boot/dts/am335x-boneblack-custom.dts
+git add arch/arm/boot/dts/$DT_NAME-custom.dts
 git commit -as -m "Custom DTS for Bootlin lab"
 
 git format-patch stable/linux-6.1.y

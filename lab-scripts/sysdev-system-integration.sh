@@ -12,6 +12,7 @@ Help ()
 	echo "    -b, --board        Indicates the board used for the test:"
 	echo "                       Possible values: (stm32, beaglebone,"
 	echo "                         beagleplay, qemu)"
+	echo "    -w, --wireless      Indicates that the selected board is the wireless one"
 	echo
 }
 
@@ -26,6 +27,9 @@ while [ $# -gt 0 ]; do
 		(-d|--lab-dir)
 			LAB_DIR="$2"
 			shift
+			shift;;
+		(-w|--wireless)
+			BBB_WIRELESS=true
 			shift;;
 		(-h|--help)
 			Help
@@ -50,9 +54,9 @@ fi
 
 # Tests if LABBOARD and LAB_DIR have been set
 
-if [ -z $LABBOARD ] || [ -z $LAB_DIR ]
+if [ -z $LABBOARD ] || [ -z $LAB_DIR ] || [ -z $BBB_WIRELESS ]
 then
-	echo "LABBOARD and LAB_DIR variables need to be set"
+	echo "LABBOARD, BBB_WIRELESS and LAB_DIR variables need to be set"
 	echo
 	Help
 	exit 1
@@ -157,7 +161,12 @@ case $LABBOARD in
 	("beagleplay")
 		sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="ti\/k3-am625-beagleplay-custom"/g' .config;;
 	("beaglebone")
-		sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="am335x-boneblack-custom"/g' .config;;
+		if [ "$BBB_WIRELESS" ]
+		then
+			sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="am335x-boneblack-wireless-custom"/g' .config
+		else
+			sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="am335x-boneblack-custom"/g' .config
+		fi;;
 	("stm32")
 		sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="stm32mp157a-dk1-custom"/g' .config;;
 	(*)

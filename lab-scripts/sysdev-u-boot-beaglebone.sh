@@ -9,6 +9,7 @@ Help ()
 	echo "Syntax: $0 [option...]"
 	echo "    -d, --lab-dir       Indicates the path of the extracted lab-data"
 	echo "                         directory"
+	echo "    -w, --wireless      Indicates that the selected board is the wireless one"
 	echo
 }
 
@@ -19,6 +20,9 @@ while [ $# -gt 0 ]; do
 		(-d|--lab-dir)
 			LAB_DIR="$2"
 			shift
+			shift;;
+		(-w|--wireless)
+			BBB_WIRELESS=true
 			shift;;
 		(-h|--help)
 			Help
@@ -41,11 +45,11 @@ then
     exit 1
 fi
 
-# Tests if LABBOARD and LAB_DIR have been set
+# Tests if BBB_WIRELESS and LAB_DIR have been set
 
-if [ -z $LAB_DIR ]
+if [ -z $LAB_DIR ] || [ -z $BBB_WIRELESS ]
 then
-	echo "LAB_DIR variable needs to be set"
+	echo "LAB_DIR and BBB_WIRELESS variables need to be set"
 	echo
 	Help
 	exit 1
@@ -71,4 +75,9 @@ make -j"$(nproc)" am335x_evm_defconfig
 sudo apt install -y libssl-dev device-tree-compiler swig \
      python3-distutils python3-dev python3-setuptools
 
-make -j"$(nproc)" DEVICE_TREE=am335x-boneblack-wireless # Add an option to select if wireless or not
+if [ "$BBB_WIRELESS" ]
+then
+	make -j"$(nproc)" DEVICE_TREE=am335x-boneblack-wireless
+else
+	make -j"$(nproc)" DEVICE_TREE=am335x-boneblack
+fi
