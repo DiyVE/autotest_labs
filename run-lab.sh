@@ -84,12 +84,14 @@ then
 fi
 
 
-# Updating LABDIR with an absolute path
+# Updating LAB_DIR with an absolute path
 LAB_DIR=$(realpath $LAB_DIR)
 
 # In case $LAB_URL is in fact a file path
 if [ -f "$LAB_URL" ]
 then
+    # Updating LAB_URL with an absolute path
+    LAB_URL=$(realpath $LAB_URL)
     BASE_NAME="$(echo $LAB_URL | sed -e 's/^.*.\///g')"
     SAVED_ARGS+=("-u" "/home/work/$BASE_NAME")
 
