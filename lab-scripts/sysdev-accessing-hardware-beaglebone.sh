@@ -63,6 +63,11 @@ export CROSS_COMPILE=arm-linux-
 
 cd $LAB_DIR/kernel/linux
 
+# Clean the lab
+git stash
+git checkout stable/linux-6.1.y
+git branch -D bootlin-labs
+
 ## Customizing the kernel conf
 
 # Support for GPIO control
