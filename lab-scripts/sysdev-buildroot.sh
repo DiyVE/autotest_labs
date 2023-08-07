@@ -218,7 +218,7 @@ case $LABBOARD in
 	("beagleplay")
 		sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="ti\/k3-am625-beagleplay-custom"/g' .config;;
 	("beaglebone")
-		if [ "$BBB_WIRELESS" ]
+		if $BBB_WIRELESS
 		then
 			sed -i 's/BR2_LINUX_KERNEL_INTREE_DTS_NAME=.*/BR2_LINUX_KERNEL_INTREE_DTS_NAME="am335x-boneblack-wireless-custom"/g' .config
 		else
