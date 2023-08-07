@@ -34,14 +34,12 @@ while [ $# -gt 0 ]; do
             shift;;
         (-r|--re-build)
             RE_BUILD=true
-            shift
             shift;;
         (-u|--url)
             export LAB_URL="$2"
             shift
             shift;;
-        (-*)
-            shift
+        (*)
             shift;;
   esac
 done

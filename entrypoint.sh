@@ -60,7 +60,7 @@ while [ $# -gt 0 ]; do
 		(-h|--help)
 			Help
 			exit 0;;
-		(-*)
+		(*)
 			echo "Unknown option $1"
 			echo
 			Help
@@ -101,7 +101,9 @@ export LAB_DIR=$(realpath "$LAB_DIR")
 # If clean has been requested
 if [ "$CLEAN_REQUESTED" ]
 then
+    echo -e '\033[1;33m'
     echo "[WARN] Cleaning the Output directory"
+    echo -e '\033[0m'
     rm -rf $LAB_DIR/.* 2>/dev/null || true
     rm -rf $LAB_DIR/*
 fi
@@ -128,7 +130,9 @@ do
     # Check if the CURRENT_LAB needs to be skipped
     if [[ ${SKIP_LABS[*]} =~ $CURRENT_LAB ]] || [ -f "$LAB_DIR/.$CURRENT_LAB-completed" ]
     then 
+        echo -e '\033[1;33m'
         echo "[WARN] Skipping the $CURRENT_LAB lab"
+        echo -e '\033[0m'
 
         # If we don't do this, we will skip the previously completed lab and
         # do not respect the STOP_LAB param
@@ -162,12 +166,15 @@ do
         fi
     done
 
+    echo -e '\033[34m'
     if [ "$current_script" == "none" ]
     then
         echo "[INFO] Testing $TRAINING_NAME-$CURRENT_LAB lab..."
+        echo -e '\033[0m'
         ./"$TRAINING_NAME-$CURRENT_LAB.sh"
     else
         echo "[INFO] Testing $current_script lab..."
+        echo -e '\033[0m'
         ./"$current_script"
     fi
 
@@ -177,7 +184,9 @@ do
     # Check if this CURRENT_LAB is the last requested
     if [ "$CURRENT_LAB" == "$STOP_LAB" ] 
     then 
+        echo -e '\033[1;33m'
         echo "[WARN] Stopping as requested at $CURRENT_LAB lab"
+        echo -e '\033[0m'
         break
     fi
 done
