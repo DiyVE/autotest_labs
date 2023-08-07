@@ -8,8 +8,8 @@ Help ()
 	echo
 	echo "Syntax: $0 [option...]"
 	echo "    -o, --output-dir      Indicates where the lab will be stored"
-	echo "    -u, --url          Indicates the url to download the labs-data"
-	echo "                         This url has to point a tar file"
+	echo "    -u, --url             Indicates the url to download the labs-data"
+	echo "                             This url has to point a tar file"
 	echo 
 }
 
@@ -38,14 +38,14 @@ done
 
 ## Testing requirements
 
-# Tests if the script is running as root
+# Test if  the script is running as root
 if [ "${EUID}" -eq 0 ]
 then
     echo "You cannot run this script as root !"
     exit 1
 fi
 
-# Tests if LAB_URL and SESSION_NAME has been set
+# Test if  LAB_URL has been set
 if [ -z $LAB_DIR ]
 then
 	echo "LAB_DIR variable needs to be set"

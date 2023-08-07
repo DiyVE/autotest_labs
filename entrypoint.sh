@@ -70,14 +70,14 @@ done
 
 ## Testing requirements
 
-# Test if the script is running as root
+# Test if  the script is running as root
 if [ "${EUID}" -eq 0 ]
 then
     echo "You cannot run this script as root !"
     exit 1
 fi
 
-# Test if LABBOARD, TRAINING_NAME and LAB_DIR have been set
+# Test if  LABBOARD, TRAINING_NAME and LAB_DIR have been set
 if [ -z "$TRAINING_NAME" ] || [ -z "$LABBOARD" ] || [ -z "$LAB_DIR" ]
 then
 	echo "Missing required arguments !"
@@ -86,7 +86,7 @@ then
 	exit 1
 fi
 
-# Test if the OUTPUT directory is empty and lab url not defined
+# Test if  the OUTPUT directory is empty and lab url not defined
 if [ "$(ls -A $LAB_DIR)" ] && [ -z "$LAB_URL" ]
 then
     echo "$LAB_DIR is empty and you didn't specified any tar file"

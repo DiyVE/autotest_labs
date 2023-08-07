@@ -37,7 +37,7 @@ done
 
 ## Testing requirements
 
-# Tests if the script is running as root
+# Test if  the script is running as root
 
 if [ "${EUID}" -eq 0 ]
 then
@@ -45,7 +45,7 @@ then
     exit 1
 fi
 
-# Tests if LABBOARD and LAB_DIR have been set
+# Test if  LABBOARD and LAB_DIR have been set
 
 if [ -z $LAB_DIR ] || [ -z $BBB_WIRELESS ]
 then
