@@ -63,6 +63,8 @@ git clone https://git.buildroot.net/buildroot
 cd buildroot
 git checkout 2023.02.x
 
+yes "" | make oldconfig
+
 sed -i 's/BR2_i386=y/# BR2_i386 is not set/g;
 		s/# BR2_arm is not set/BR2_arm=y/g' .config
 
@@ -99,7 +101,7 @@ sed -i 's/BR2_TOOLCHAIN_EXTERNAL_CUSTOM_UCLIBC=y/# BR2_TOOLCHAIN_EXTERNAL_CUSTOM
 		s/# BR2_TOOLCHAIN_EXTERNAL_HEADERS_6_1 is not set/BR2_TOOLCHAIN_EXTERNAL_HEADERS_6_1=y/g;
 		s/BR2_TOOLCHAIN_EXTERNAL_HEADERS_REALLY_OLD=y/# BR2_TOOLCHAIN_EXTERNAL_HEADERS_REALLY_OLD is not set/g' .config
 
-sed -i 's/BR2_TOOLCHAIN_EXTERNAL_PATH=.*/BR2_TOOLCHAIN_EXTERNAL_PATH="$LAB_DIR\/x-tools\/arm-training-linux-musleabihf"/g' .config
+sed -i "s#BR2_TOOLCHAIN_EXTERNAL_PATH=.*#BR2_TOOLCHAIN_EXTERNAL_PATH=\"$LAB_DIR\/x-tools\/arm-training-linux-musleabihf\"#g" .config
 
 
 yes "" | make oldconfig
@@ -132,5 +134,5 @@ yes "" | make oldconfig
 make -j"$(nproc)"
 
 # Analyzing Dep
-sudo apt install graphviz
+sudo apt install -y graphviz
 make graph-depends

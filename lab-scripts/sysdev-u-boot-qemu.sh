@@ -77,7 +77,7 @@ sed -i 's/# CONFIG_ENV_IS_IN_FAT is not set/CONFIG_ENV_IS_IN_FAT=y/g;
 sed -i 's/# CONFIG_CMD_BOOTD is not set/CONFIG_CMD_BOOTD=y/g;
 		s/# CONFIG_CMD_EDITENV is not set/CONFIG_CMD_EDITENV=y/g' .config
 
-make oldconfig
+yes "" | make oldconfig
 
 sed -i 's/CONFIG_ENV_FAT_DEVICE_AND_PART=.*/CONFIG_ENV_FAT_DEVICE_AND_PART="0\:1"/g' .config
 
