@@ -62,7 +62,7 @@ cd $LAB_DIR/kernel/linux
 # Clean the lab
 git stash
 git checkout stable/linux-6.1.y
-git branch -D bootlin-labs
+git branch -D bootlin-labs 2>/dev/null || true
 
 ## Customizing the kernel conf
 
@@ -97,7 +97,7 @@ echo "/dts-v1/;
     };
 };" > $LAB_DIR/kernel/linux/arch/arm/boot/dts/stm32mp157a-dk1-custom.dts
 
-sed -i '/stm32mp157a-dk1.dtb/a stm32mp157a-dk1-custom.dtb \\' $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
+sed -i '/stm32mp157a-dk1.dtb/a stm32mp157a-dk1-custom.dtb \\\\' $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
 
 # Committing kernel tree changes
 git checkout -b bootlin-labs

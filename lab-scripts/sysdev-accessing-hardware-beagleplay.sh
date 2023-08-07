@@ -63,7 +63,7 @@ cd $LAB_DIR/kernel/linux
 # Clean the lab
 git stash
 git checkout stable/linux-6.1.y
-git branch -D bootlin-labs
+git branch -D bootlin-labs 2>/dev/null || true
 
 ## Customizing the kernel conf
 

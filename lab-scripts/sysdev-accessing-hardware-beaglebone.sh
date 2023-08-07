@@ -66,7 +66,7 @@ cd $LAB_DIR/kernel/linux
 # Clean the lab
 git stash
 git checkout stable/linux-6.1.y
-git branch -D bootlin-labs
+git branch -D bootlin-labs 2>/dev/null || true
 
 ## Customizing the kernel conf
 
@@ -113,13 +113,15 @@ echo "/dts-v1/;
 &i2c1 {
     status = \"okay\";
     clock-frequency = <100000>;
+	pinctrl-names = \"default\";
+    pinctrl-0 = <&i2c1_pins>;
     nunchuk: joystick@52 {
         compatible = \"nintendo,nunchuk\";
         reg = <0x52>;
     };
 };" > $LAB_DIR/kernel/linux/arch/arm/boot/dts/$DT_NAME-custom.dts
 
-sed -i "/$DT_NAME.dtb/a $DT_NAME-custom.dtb \\" $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
+sed -i "/$DT_NAME.dtb/a $DT_NAME-custom.dtb \\\\" $LAB_DIR/kernel/linux/arch/arm/boot/dts/Makefile
 
 # Committing kernel tree changes
 git checkout -b bootlin-labs
