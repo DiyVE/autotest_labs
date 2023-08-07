@@ -9,7 +9,7 @@ RUN apt-get update
 # 	device-tree-compiler swig python3-distutils
 RUN apt-get install -y sudo gcc g++ gperf bison flex texinfo help2man make libncurses5-dev \
     python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
-    patch libstdc++6 rsync git meson ninja-build bc
+    patch libstdc++6 rsync git meson ninja-build bc kmod cpio libssl-dev
 RUN useradd -rm -u $UID -s /bin/bash -g root -G sudo -d /home/work work
 RUN passwd -d work
 
